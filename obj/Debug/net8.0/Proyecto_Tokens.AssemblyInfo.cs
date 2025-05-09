@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Proyecto_Tokens")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+97d4095f3115c3f9418f967fe1f56a3e95c983f1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe0a1c80d2ff038f7b84ed0b094da983b483ff8e")]
 [assembly: System.Reflection.AssemblyProductAttribute("Proyecto_Tokens")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Proyecto_Tokens")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
