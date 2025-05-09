@@ -127,6 +127,18 @@
         }
       }
     },
+    "/api/Login/usuarios-activos": {
+      "get": {
+        "tags": [
+          "Login"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Product": {
       "get": {
         "tags": [
@@ -181,6 +193,23 @@
   },
   "components": {
     "schemas": {
+      "LoginRegistro": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaHoraLogin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/UserModels"
+          }
+        },
+        "additionalProperties": false
+      },
       "LoginUser": {
         "type": "object",
         "properties": {
@@ -223,6 +252,16 @@
           "rol": {
             "minLength": 1,
             "type": "string"
+          },
+          "activo": {
+            "type": "boolean"
+          },
+          "registrosLogin": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LoginRegistro"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

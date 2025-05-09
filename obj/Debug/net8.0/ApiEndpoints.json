@@ -82,6 +82,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "LoginController",
+    "Method": "ObtenerUsuariosActivos",
+    "RelativePath": "api/Login/usuarios-activos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Proyecto_Tokens.Controllers.ProductController",
     "Method": "Get",
     "RelativePath": "api/Product",
