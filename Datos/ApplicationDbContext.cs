@@ -12,5 +12,7 @@ namespace Proyecto_Tokens.Data
         }
 
         public DbSet<UserModels> Usuarios { get; set; }
+        public DbSet<LoginRegistro> LoginRegistro { get; set; }
     }
 }
+
