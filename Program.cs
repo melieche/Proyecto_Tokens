@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Proyecto_Tokens.Models;
+using Proyecto_Tokens.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,8 @@ builder.Services.AddSwaggerGen();
 
 // 🔹 Registrar el servicio JWT personalizado
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<CategoryService>();
 
 // 🔹 Configurar la autenticación con JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -36,6 +39,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+
+builder.Services.AddHttpClient("NodeApi", client =>
+{
+    client.BaseAddress = new Uri("http://localhost:3000/");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IPasswordHasher<UserModels>, PasswordHasher<UserModels>>();
 
@@ -46,7 +57,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} 
+}
 
 app.UseHttpsRedirection();
 

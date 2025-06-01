@@ -17,5 +17,9 @@ namespace Proyecto_Tokens.Models
 
         [Required]
         public string Rol { get; set; }
+
+        public bool Activo { get; set; }
+      
+        public ICollection<LoginRegistro> RegistrosLogin { get; set; }
     }
 }

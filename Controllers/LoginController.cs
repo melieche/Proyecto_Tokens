@@ -4,14 +4,12 @@ using Proyecto_Tokens.Models;
 using Proyecto_Tokens.Data;
 using Microsoft.AspNetCore.Identity;
 
-
 [ApiController]
 [Route("api/[controller]")]
 public class LoginController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly JwtService _jwtService;
-
     private readonly IPasswordHasher<UserModels> _passwordHasher;
 
     public LoginController(ApplicationDbContext context, JwtService jwtService, IPasswordHasher<UserModels> passwordHasher)
@@ -34,10 +32,19 @@ public class LoginController : ControllerBase
         if (result != PasswordVerificationResult.Success)
             return Unauthorized("Contraseña incorrecta");
 
+        // Guardar el registro de login
+        var loginRegistro = new LoginRegistro
+        {
+            Usuario = usuario,
+           FechaHoraLogin = DateTime.UtcNow
+        };
+
+        _context.LoginRegistro.Add(loginRegistro);
+        _context.SaveChanges();
+
         var token = _jwtService.GenerateToken(usuario.Correo_Electronico, usuario.Rol);
         return Ok(new { token });
     }
-
 
     [Authorize(Roles = "Administrador")]
     [HttpGet("admin")]
@@ -74,5 +81,37 @@ public class LoginController : ControllerBase
         return Ok("Usuario registrado con éxito.");
     }
 
+    [Authorize(Roles = "Administrador")]
+    [HttpGet("usuarios-activos")]
+    public IActionResult ObtenerUsuariosActivos()
+    {
+        var usuariosActivos = _context.Usuarios
+            .Where(u => u.Activo)
+            .Select(u => new
+            {
+                u.ID,
+                u.Nombre_Usuario,
+                u.Correo_Electronico,
+                u.Rol
+            })
+            .ToList();
 
+        return Ok(usuariosActivos);
+    }
+
+    [Authorize]
+    [HttpGet("login-registros")]
+    public IActionResult ObtenerRegistrosLogin()
+    {
+        var registros = _context.LoginRegistro
+            .Select(r => new
+            {
+                r.Id,
+                r.Usuario,
+                r.FechaHoraLogin
+            })
+            .ToList();
+
+        return Ok(registros);
+    }
 }
